@@ -38,7 +38,6 @@ XYZ *et al.*, *XYZ* (20XYZ)
 
 
 ## Dependencies/Requirements
-### Unavailble libraries
 Some functions require [SSPA](https://www.bioconductor.org/packages/3.12/bioc/html/SSPA.html), package not available anymore on Bioconductor.
 These can be installed from the source available in this repository:
 
