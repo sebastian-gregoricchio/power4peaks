@@ -8,6 +8,7 @@ setClass(Class = "power4omics.stats",
                       design = "ANY",
                       diff.method = "ANY",
                       p.adjust.method = "ANY",
+                      diff.object = "ANY",
                       results = "ANY",
                       statistics = "ANY",
                       stat.distribution = "ANY",
@@ -30,6 +31,19 @@ setClass(Class = "power4omics.power",
 
 
 ######################################################################################
+
+#' @title power4omics.stats show-method
+#' @export
+setMethod(f = "show",
+          signature = "power4omics.stats",
+          definition =
+            function(object) {
+              cat(paste0("          Contrast | ", object@contrast[1], ": ", object@contrast[2], " vs ", object@contrast[3], "\n"))
+              cat(paste0("            Method | ", object@diff.method, "\n"))
+              cat(paste0("Stat. distribution | ", object@stat.distribution, "\n"))
+              cat(paste0("                df | ", object@df))
+            })
+
 
 
 #' @title power4omics.power show-method

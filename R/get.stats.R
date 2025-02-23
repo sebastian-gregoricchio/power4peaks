@@ -75,7 +75,7 @@ get.stats =
       require(DESeq2)
 
       ### Load in DESeq2 and Estimate size factors from diffBind
-      dba.object_norm = DiffBind::dba.normalize(dba.object, method = DBA_DESEQ2)
+      dba.object_norm = DiffBind::dba.normalize(dba.object, method = DiffBind::DBA_DESEQ2)
 
 
       dds = suppressMessages(suppressWarnings(DESeqDataSetFromMatrix(countData = round(as.matrix(counts)),
@@ -92,11 +92,8 @@ get.stats =
       dds = DESeq(dds, fitType = "local")
 
 
-      ## degrees of freedom ans statistics
-      design_matrix = design_edgeR
-
-
       ### Collect values for output slots
+      diff.object = dds
       results = results(dds, contrast = contrast, pAdjustMethod = p.adjust.method)
       design_matrix = model.matrix(object = design(dds), data = colData(dds))
       df = ncol(design_matrix)
@@ -108,11 +105,11 @@ get.stats =
 
 
       ############################################
-      ### EdgeR
+      ### edgeR
       require(edgeR)
 
       # Estimate size factors from diffBind
-      dba.object_norm = dba.normalize(dba.object, method = DBA_EDGER)
+      #dba.object_norm = DiffBind::dba.normalize(dba.object, method = DBA_EDGER)
 
       # Load counts in edgeR
       groups = factor(meta[,contrast[1]])
@@ -137,12 +134,16 @@ get.stats =
 
 
       ### Collect values for output slots
+      diff.object = list(DGE_list = DGE_list,
+                         contrast_A_vs_B = contrast_A_vs_B,
+                         glmQLFit = fit,
+                         glmQLFit.test = test)
       design_matrix = design_edgeR
       df = unique(test$df.residual)
-      statistics = test$table$`F`
-      method = "edgeR"
-      stat.distribution = "chi"
       results = as.data.frame(topTags(object = test, n = nrow(counts), adjust.method = p.adjust.method))
+      statistics = results$`F`
+      method = "edgeR"
+      stat.distribution = "chisq"
     }
 
 
@@ -155,6 +156,7 @@ get.stats =
           design = design_matrix,
           diff.method = method,
           p.adjust.method = p.adjust.method,
+          diff.object = diff.object,
           results = results,
           statistics = statistics,
           stat.distribution = stat.distribution,
