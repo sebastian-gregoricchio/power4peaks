@@ -8,6 +8,7 @@
 # power4omics [<img src="https://sebastian-gregoricchio.github.io/power4omics/power4omics_logo.svg" align="right" height = 150/>](https://sebastian-gregoricchio.github.io/power4omics)
 An R-package for power and sample size calculations for genomics data (ChIP-seq, ATAC-seq, CUT&amp;Tag/RUN, etc.)
 
+<br>
 
 ## Introduction
 Add introduction here
