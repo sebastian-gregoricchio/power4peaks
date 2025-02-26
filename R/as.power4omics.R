@@ -52,6 +52,7 @@ as.power4omics =
     # DESeq2
     if (length(dba.object$DESeq2) != 1) {
 
+      require(DESeq2)
       diff.method = "DESeq2"
       stat.distribution = "norm"
 
