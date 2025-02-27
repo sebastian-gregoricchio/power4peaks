@@ -51,7 +51,7 @@ install.packages("devtools")
 ## devtools::install_github("r-lib/devtools")
 
 # Install SSPA package
-devtools::install_url("https://github.com/sebastian-gregoricchio/power4omics/resources/SSPA_2.30.0.tar.gz", type = "source")
+install.packages("https://github.com/sebastian-gregoricchio/power4omics/blob/main/resources/SSPA_2.30.0.tar.gz", type ='source', repos = NULL)
 ```
 
 <br />
