@@ -28,7 +28,7 @@ compute.power =
       ### Ask for installing
       install = readline("Do you want to install `SSPAR`? [yes/no] ")
       if (tolower(install) %in% c("yes","y","yeah","yep","yo")) {
-        install.packages("https://github.com/sebastian-gregoricchio/power4omics/blob/main/resources/SSPA_2.30.0.tar.gz", type ='source', repos = NULL)
+        install.packages("https://www.bioconductor.org/packages/3.12/bioc/src/contrib/SSPA_2.30.0.tar.gz", type = "source")
         library(SSPA)
       }
     } else {
