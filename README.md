@@ -47,7 +47,7 @@ These can be installed from the source available in this repository:
 install.packages("SSPA_2.30.0.tar.gz", type ="source", repos = NULL)
 
 # or alternativerly
-# Install SSPA package
+# Install SSPA package from gitHub path
 install.packages("https://github.com/sebastian-gregoricchio/power4omics/blob/main/resources/SSPA_2.30.0.tar.gz", type ='source', repos = NULL)
 ```
 
