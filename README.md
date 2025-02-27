@@ -40,16 +40,14 @@ XYZ *et al.*, *XYZ* (20XYZ)
 
 ## Dependencies/Requirements
 Some functions require [SSPA](https://www.bioconductor.org/packages/3.12/bioc/html/SSPA.html), package not available anymore on Bioconductor.
-These can be installed from the source available in this repository:
+These can be installed from the bioconductor archive source:
 
 ```r
-# Download the source and then:
-install.packages("SSPA_2.30.0.tar.gz", type ="source", repos = NULL)
-
-# or alternativerly
 # Install SSPA package from gitHub path
-install.packages("https://github.com/sebastian-gregoricchio/power4omics/blob/main/resources/SSPA_2.30.0.tar.gz", type ='source', repos = NULL)
+install.packages("https://www.bioconductor.org/packages/3.12/bioc/src/contrib/SSPA_2.30.0.tar.gz", type = "source")
 ```
+
+Alternatively the source file is available in this repository in the directory `resources`.
 
 <br />
 
