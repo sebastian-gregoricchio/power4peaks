@@ -43,12 +43,8 @@ Some functions require [SSPA](https://www.bioconductor.org/packages/3.12/bioc/ht
 These can be installed from the source available in this repository:
 
 ```r
-# Install devtools from CRAN
-install.packages("devtools")
-
-# Or the development version from GitHub:
-## install.packages("devtools")
-## devtools::install_github("r-lib/devtools")
+# Download the source and then:
+install.packages("SSPA_2.30.0.tar.gz", type ="source", repos = NULL)
 
 # Install SSPA package
 install.packages("https://github.com/sebastian-gregoricchio/power4omics/blob/main/resources/SSPA_2.30.0.tar.gz", type ='source', repos = NULL)
