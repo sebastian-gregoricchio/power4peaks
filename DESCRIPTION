@@ -1,10 +1,10 @@
-Package: power4omics
+Package: power4peaks
 Type: Package
-Title: An R-package for power and sample size calculations for genomics data
+Title: An R-package for power and sample size calculations for genpeaks data
 Version: 0.1.0
 Author: Sebastian Gregoricchio
 Maintainer: Sebastian Gregoricchio <sebastian.gregoricchio@gmail.com>
-Description: An R-package for power and sample size calculations for genomics data, such as ATAC-seq, ChIP-seq, CUT-and-Tag, etc.
+Description: An R-package for power and sample size calculations for genpeaks data, such as ATAC-seq, ChIP-seq, CUT-and-Tag, etc.
 License: GNU GENERAL PUBLIC LICENSE version 3
 Depends:
 	R (>= 4.0.3)
@@ -17,7 +17,7 @@ LazyData: true
 RoxygenNote: 7.3.2
 VignetteBuilder: knitr
 URL:
-	https://sebastian-gregoricchio.github.io/DEprot/
-	https://github.com/sebastian-gregoricchio/DEprot/
+	https://sebastian-gregoricchio.github.io/power4peaks/
+	https://github.com/sebastian-gregoricchio/power4peaks/
 	https://sebastian-gregoricchio.github.io/
-BugReports: https://github.com/sebastian-gregoricchio/DEprot/issues
+BugReports: https://github.com/sebastian-gregoricchio/power4peaks/issues
