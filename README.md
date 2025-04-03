@@ -44,7 +44,8 @@ These can be installed from the bioconductor archive source:
 
 ```r
 # Install SSPA package from gitHub path
-install.packages("https://www.bioconductor.org/packages/3.12/bioc/src/contrib/SSPA_2.30.0.tar.gz", type = "source")
+install.packages("https://www.bioconductor.org/packages/3.12/bioc/src/contrib/SSPA_2.30.0.tar.gz",
+                 type = "source")
 ```
 
 Alternatively the source file is available in this repository in the directory `resources`.
