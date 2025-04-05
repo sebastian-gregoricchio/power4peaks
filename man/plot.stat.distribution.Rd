@@ -9,7 +9,11 @@
   obs.stat.color = "black",
   norm.fit.color = "firebrick",
   chi.fit.color = "navy",
-  f.fit.volor = "forestgreen"
+  t.fit.color = "violet",
+  f.fit.color = "forestgreen",
+  df1 = NULL,
+  df2 = NULL,
+  adapt.y.axis = TRUE
 )
 }
 \arguments{
@@ -21,7 +25,15 @@
 
 \item{chi.fit.color}{Any R-supported color string indicating the color to use for the chi-squared distribution. Default: \code{"navy"}.}
 
+\item{t.fit.color}{Any R-supported color string indicating the color to use for the t distribution. Default: \code{"violet"}.}
+
 \item{f.fit.color}{Any R-supported color string indicating the color to use for the F distribution. Default: \code{"forestgreen"}.}
+
+\item{df1}{Numeric value forcing the value for the degrees-of-freedom 1. Default: \code{NULL} (the value is obtained from the \code{power4peaks.stats} object.}
+
+\item{df2}{Numeric value forcing the value for the degrees-of-freedom 2. Default: \code{NULL} (the value is obtained from the \code{power4peaks.stats} object.}
+
+\item{adapt.y.axis}{Logical value indicating whether the Y-axis should be scaled to fit the observed distribution/ Default: \code{TRUE}.}
 }
 \value{
 A ggplot object.

@@ -4,10 +4,11 @@
 \alias{compute.power}
 \title{compute.power}
 \usage{
-compute.power(
+\method{compute}{power}(
   power4peaks.stats,
   sample.size.range = c(0, 50),
   power.threshold = 0.8,
+  estimation.method = "congrad",
   distribution.type = NULL,
   df = NULL
 )
@@ -19,9 +20,11 @@ compute.power(
 
 \item{power.threshold}{number between 0 and 1 indicating the threshold to plot for the power. Default: \code{0.8} (80 percent power).}
 
+\item{estimation.method}{String indicating the method to use to estimate the power (passed to \code{SSPA::sampleSize} function). One among: 'deconv', 'congrad', 'tikhonov' or 'ferreira'. Default: \code{"congrad"}.}
+
 \item{distribution.type}{String indicating the type of distribution to use; one among: 'norm', 't', 'f', 'chisq'. Default: \code{NULL}, automatically defined from the power4peaks.stats object.}
 
-\item{df}{Numeric value or vector (df1 and df2, only for F statistics) indicating the number of degrees of freedom. Default: \code{NULL}, automatically defined from the power4peaks.stats object.}
+\item{df}{Numeric value or vector (df1 and df2, required only for F-statistics) indicating the number of degrees of freedom. Default: \code{NULL}, automatically defined from the power4peaks.stats object.}
 }
 \value{
 An object of class \code{power4peaks.power}.
