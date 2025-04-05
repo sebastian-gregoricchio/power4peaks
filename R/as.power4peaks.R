@@ -27,14 +27,10 @@ as.power4peaks =
       return(dba.object)
 
     } else if (!("DESeq2" %in% names(dba.object) | "edgeR" %in% names(dba.object))) {
-      warning("The input must be an object of class 'DBA' in which differential analyses have been already performed.\nThe current object does not contain any differential analyses.")
+      warning("The input must be an object of class `DBA` in which differential analyses have been already performed.\nThe current object does not contain any differential analyses.")
       return(dba.object)
 
-    } #else if (length(dba.object$DESeq2) == 1) {
-      #warning("Only dba objects containing analyses performed using DEseq2 can be used in this function.")
-      #return(dba.object)
-    #}
-
+    }
 
     ## check if contrast is available
     if (!(contrast %in% 1:length(dba.object$contrasts))) {
@@ -52,12 +48,12 @@ as.power4peaks =
     # DESeq2
     if (length(dba.object$DESeq2) != 1) {
 
-      require(DESeq2)
+      #require(DESeq2, quietly = T)
       diff.method = "DESeq2"
       stat.distribution = "norm"
 
       ## Collect degrees of freedom
-      design_matrix = model.matrix(object = BiocGenerics::design(dba.object$DESeq2$DEdata), data = colData(dba.object$DESeq2$DEdata))
+      design_matrix = model.matrix(object = BiocGenerics::design(dba.object$DESeq2$DEdata), data = SummarizedExperiment::colData(dba.object$DESeq2$DEdata))
       df1 = ncol(design_matrix)
       df2 = NULL
 
@@ -74,7 +70,8 @@ as.power4peaks =
       stat.distribution = "chisq"
 
       ## Collect degrees of freedom
-      df1 = median(dba.object$edgeR$DEdata$df.residual)
+      df1 = 1
+      #df2 = median(dba.object$edgeR$DEdata$df.residual)
       df2 = NULL
 
       ## Collect design
@@ -82,7 +79,7 @@ as.power4peaks =
 
 
       ## Collect results and statistics
-      edgeR_DEG = edgeR::glmLRT(dba.object$edgeR$DEdata)
+      edgeR_DEG = edgeR::glmLRT(glmfit = dba.object$edgeR$DEdata, coef = 2)
 
       results = as.data.frame(edgeR::topTags(object = edgeR_DEG, n = nrow(edgeR_DEG$table), adjust.method = p.adjust.method))
       statistics = results$LR

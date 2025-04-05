@@ -42,7 +42,8 @@ setMethod(f = "show",
               cat(paste0("          Contrast | ", object@contrast[1], ": ", object@contrast[2], " vs ", object@contrast[3], "\n"))
               cat(paste0("            Method | ", object@diff.method, "\n"))
               cat(paste0("Stat. distribution | ", object@stat.distribution, "\n"))
-              cat(paste0("                df | ", object@df))
+              cat(paste0("               df1 | ", object@df1, "\n"))
+              cat(paste0("               df2 | ", object@df2))
             })
 
 
