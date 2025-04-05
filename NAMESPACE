@@ -2,7 +2,6 @@
 
 export(as.power4peaks)
 export(compute.power)
-export(get.stats)
 export(plot.stat.distribution)
 exportClasses(power4peaks.power)
 exportClasses(power4peaks.stats)
