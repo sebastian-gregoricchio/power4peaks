@@ -46,14 +46,16 @@
     </div>
 
     <div class="ref-description">
-    <p>Compute the power and effect size for the object obtained from <a href="get.stats.html">get.stats</a>.</p>
+    <p>Compute the power and effect size for the object obtained from get.stats.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">compute.power</span><span class="op">(</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for class 'power'</span></span>
+<span><span class="fu">compute</span><span class="op">(</span></span>
 <span>  <span class="va">power4peaks.stats</span>,</span>
 <span>  sample.size.range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">50</span><span class="op">)</span>,</span>
 <span>  power.threshold <span class="op">=</span> <span class="fl">0.8</span>,</span>
+<span>  estimation.method <span class="op">=</span> <span class="st">"congrad"</span>,</span>
 <span>  distribution.type <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  df <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -75,12 +77,16 @@
 <dd><p>number between 0 and 1 indicating the threshold to plot for the power. Default: <code>0.8</code> (80 percent power).</p></dd>
 
 
+<dt id="arg-estimation-method">estimation.method<a class="anchor" aria-label="anchor" href="#arg-estimation-method"></a></dt>
+<dd><p>String indicating the method to use to estimate the power (passed to <code><a href="https://rdrr.io/pkg/SSPA/man/sampleSize.html" class="external-link">SSPA::sampleSize</a></code> function). One among: 'deconv', 'congrad', 'tikhonov' or 'ferreira'. Default: <code>"congrad"</code>.</p></dd>
+
+
 <dt id="arg-distribution-type">distribution.type<a class="anchor" aria-label="anchor" href="#arg-distribution-type"></a></dt>
 <dd><p>String indicating the type of distribution to use; one among: 'norm', 't', 'f', 'chisq'. Default: <code>NULL</code>, automatically defined from the power4peaks.stats object.</p></dd>
 
 
 <dt id="arg-df">df<a class="anchor" aria-label="anchor" href="#arg-df"></a></dt>
-<dd><p>Numeric value or vector (df1 and df2, only for F statistics) indicating the number of degrees of freedom. Default: <code>NULL</code>, automatically defined from the power4peaks.stats object.</p></dd>
+<dd><p>Numeric value or vector (df1 and df2, required only for F-statistics) indicating the number of degrees of freedom. Default: <code>NULL</code>, automatically defined from the power4peaks.stats object.</p></dd>
 
 </dl></div>
     <div id="value">

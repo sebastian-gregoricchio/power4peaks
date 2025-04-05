@@ -46,7 +46,7 @@
     </div>
 
     <div class="ref-description">
-    <p>Plot the distribution of the statistics obtained from <a href="get.stats.html">get.stats</a>. Normal and chi-squared distributions are overlayed.</p>
+    <p>Plot the distribution of the statistics obtained from get.stats. Normal and chi-squared distributions are overlayed.</p>
     </div>
 
     <div id="ref-usage">
@@ -56,7 +56,11 @@
 <span>  obs.stat.color <span class="op">=</span> <span class="st">"black"</span>,</span>
 <span>  norm.fit.color <span class="op">=</span> <span class="st">"firebrick"</span>,</span>
 <span>  chi.fit.color <span class="op">=</span> <span class="st">"navy"</span>,</span>
-<span>  f.fit.volor <span class="op">=</span> <span class="st">"forestgreen"</span></span>
+<span>  t.fit.color <span class="op">=</span> <span class="st">"violet"</span>,</span>
+<span>  f.fit.color <span class="op">=</span> <span class="st">"forestgreen"</span>,</span>
+<span>  df1 <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  df2 <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  adapt.y.axis <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -80,8 +84,24 @@
 <dd><p>Any R-supported color string indicating the color to use for the chi-squared distribution. Default: <code>"navy"</code>.</p></dd>
 
 
+<dt id="arg-t-fit-color">t.fit.color<a class="anchor" aria-label="anchor" href="#arg-t-fit-color"></a></dt>
+<dd><p>Any R-supported color string indicating the color to use for the t distribution. Default: <code>"violet"</code>.</p></dd>
+
+
 <dt id="arg-f-fit-color">f.fit.color<a class="anchor" aria-label="anchor" href="#arg-f-fit-color"></a></dt>
 <dd><p>Any R-supported color string indicating the color to use for the F distribution. Default: <code>"forestgreen"</code>.</p></dd>
+
+
+<dt id="arg-df-">df1<a class="anchor" aria-label="anchor" href="#arg-df-"></a></dt>
+<dd><p>Numeric value forcing the value for the degrees-of-freedom 1. Default: <code>NULL</code> (the value is obtained from the <code>power4peaks.stats</code> object.</p></dd>
+
+
+<dt id="arg-df-">df2<a class="anchor" aria-label="anchor" href="#arg-df-"></a></dt>
+<dd><p>Numeric value forcing the value for the degrees-of-freedom 2. Default: <code>NULL</code> (the value is obtained from the <code>power4peaks.stats</code> object.</p></dd>
+
+
+<dt id="arg-adapt-y-axis">adapt.y.axis<a class="anchor" aria-label="anchor" href="#arg-adapt-y-axis"></a></dt>
+<dd><p>Logical value indicating whether the Y-axis should be scaled to fit the observed distribution/ Default: <code>TRUE</code>.</p></dd>
 
 </dl></div>
     <div id="value">
