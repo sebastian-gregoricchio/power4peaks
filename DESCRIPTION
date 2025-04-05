@@ -10,7 +10,7 @@ Depends:
 	R (>= 4.0.3)
 Imports:
 	BiocManager, DESeq2, DiffBind, dplyr, edgeR, fitdistrplus, ggplot2 (>= 3.3.3), ggtext, ggpubr, patchwork
-Suggests: rmarkdown, knitr, prettydoc, SSPA, devtools
+Suggests: rmarkdown, knitr, prettydoc, SSPA (>= 2.30.0), devtools
 biocViews:
 Encoding: UTF-8
 LazyData: True
