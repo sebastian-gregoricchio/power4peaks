@@ -4,9 +4,9 @@
 \alias{compute.power}
 \title{compute.power}
 \usage{
-\method{compute}{power}(
+compute.power(
   power4peaks.stats,
-  sample.size.range = c(0, 50),
+  sample.size.range = c(0, 20),
   power.threshold = 0.8,
   estimation.method = "congrad",
   distribution.type = NULL,
