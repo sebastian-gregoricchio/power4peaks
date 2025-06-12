@@ -5,7 +5,7 @@
 ![visits](https://badges.pufler.dev/visits/sebastian-gregoricchio/power4peaks) -->
 <!---![downloads](https://img.shields.io/github/downloads/sebastian-gregoricchio/power4peaks/total.svg)--->
 
-# power4peaks [<img src="https://sebastian-gregoricchio.github.io/power4peaks/power4peaks_logo.svg" align="right" height = 150/>](https://sebastian-gregoricchio.github.io/power4peaks)
+# power4peaks [<img src="https://sebastian-gregoricchio.github.io/power4peaks/resources/power4peaks_logo.png" align="right" height = 150/>](https://sebastian-gregoricchio.github.io/power4peaks)
 An R-package for power and sample size calculations for genpeaks data (ChIP-seq, ATAC-seq, CUT&amp;Tag/RUN, etc.)
 
 <br>
