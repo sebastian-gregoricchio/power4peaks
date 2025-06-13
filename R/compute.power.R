@@ -16,7 +16,7 @@
 
 compute.power =
   function(power4peaks.stats,
-           sample.size.range = c(0, 50),
+           sample.size.range = c(0, 20),
            power.threshold = 0.8,
            estimation.method = "congrad",
            distribution.type = NULL,
@@ -71,7 +71,7 @@ compute.power =
       }
     } else {
       if (tolower(distribution.type) == "f" & length(df) != 2) {
-        warning("When `distribution.type` is set to 'F', the df must be a vector of two elements: c(numerator.df1, denominator.df2).")
+        warning("When `distribution.type` is set to 'FALSE', the df must be a vector of two elements: c(numerator.df1, denominator.df2).")
         return(invisible())
       }
     }
@@ -83,13 +83,16 @@ compute.power =
     n.group2 = sum(power4peaks.stats@dba.object$samples[,power4peaks.stats@contrast[1]] %in% power4peaks.stats@contrast[3], na.rm = T)
 
 
-    # if (distribution.type %in% c("norm")) {
+    if (distribution.type %in% c("norm")) {
       # effective sample size defined as: sqrt(1/(1/n1 + 1/n2))
       sample.size = sqrt(1 / (1/n.group1 + 1/n.group2))
-    # } else {
-    #   # Total sample size
-    #   sample.size = n.group1 + n.group2
-    # }
+    } else if (distribution.type %in% c("chisq")) {
+      # Total sample size
+      sample.size = n.group1 + n.group2
+    } else {
+      # Total sample size
+      sample.size = n.group1 + n.group2
+    }
 
 
 
@@ -123,11 +126,12 @@ compute.power =
              aes(x = effect_size,
                  y = Lamba)) +
       geom_line(linewidth = 1) +
-      geom_vline(xintercept = sum(power4peaks.stats@dba.object$samples[,power4peaks.stats@contrast[1]] %in% power4peaks.stats@contrast[2:3]), linetype = 3, color = "gray50") +
+      geom_vline(xintercept = sum(power4peaks.stats@dba.object$samples[,power4peaks.stats@contrast[1]] %in% power4peaks.stats@contrast[2:3])/2, linetype = 3, color = "gray50") +
       xlab("Effect Size (theta)") +
       xlim(c(0,NA)) +
       ggtitle(label = title_lable,
-              subtitle = paste0("*",power4peaks.stats@contrast[1],"*: **", power4peaks.stats@contrast[2], "** *vs* **",power4peaks.stats@contrast[3],"**")) +
+              subtitle = paste0("*",power4peaks.stats@contrast[1],":* **", power4peaks.stats@contrast[2], "** *vs* **",power4peaks.stats@contrast[3],"**")) +
+      annotate(geom = "text", x = +Inf, y = +Inf, label = bquote('\u03C0'^0 ~ "=" ~ .(round(ss@pi0, 2))), hjust = 1.5, vjust = 1.5) +
       ggpubr::theme_pubr() +
       theme(axis.text = element_text(color = "black"),
             axis.ticks = element_line(color = "black"),
@@ -142,9 +146,9 @@ compute.power =
              aes(x = sample_size,
                  y = Power)) +
       geom_line(linewidth = 1) +
-      xlab("Sample size") +
+      xlab("Sample size (per group)") +
       theme_classic() +
-      geom_vline(xintercept = sum(power4peaks.stats@dba.object$samples[,power4peaks.stats@contrast[1]] %in% power4peaks.stats@contrast[2:3]), linetype = 3, color = "gray50") +
+      geom_vline(xintercept = sum(power4peaks.stats@dba.object$samples[,power4peaks.stats@contrast[1]] %in% power4peaks.stats@contrast[2:3])/2, linetype = 3, color = "gray50") +
       geom_hline(yintercept = power.threshold, linetype = 1, color = "firebrick") +
       scale_y_continuous(limits = c(0,1), expand = c(0,0)) +
       ggpubr::theme_pubr()

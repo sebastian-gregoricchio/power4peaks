@@ -69,17 +69,16 @@ as.power4peaks =
       diff.method = "edgeR"
       stat.distribution = "chisq"
 
-      ## Collect degrees of freedom
-      df1 = 1
-      #df2 = median(dba.object$edgeR$DEdata$df.residual)
-      df2 = NULL
-
       ## Collect design
       design_matrix = dba.object$edgeR$design
 
 
       ## Collect results and statistics
       edgeR_DEG = edgeR::glmLRT(glmfit = dba.object$edgeR$DEdata, coef = 2)
+
+      ## Collect degrees of freedom
+      df1 = median(edgeR_DEG$df.test)
+      df2 = NULL
 
       results = as.data.frame(edgeR::topTags(object = edgeR_DEG, n = nrow(edgeR_DEG$table), adjust.method = p.adjust.method))
       statistics = results$LR
