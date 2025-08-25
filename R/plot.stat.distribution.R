@@ -127,7 +127,7 @@ plot.stat.distribution =
 
 
     ### get maximum height for plotting (sometimes the fitting at low-tail is too high)
-    max_observed = max((plotting_tb %>% dplyr::filter(Distribution == "Observed"))$Density, na.rm = T)
+    max_observed = max((plotting_tb %>% dplyr::filter(Distribution == "Observed"))$Density, na.rm = TRUE)
 
 
 

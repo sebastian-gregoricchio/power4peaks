@@ -78,8 +78,8 @@ compute.power =
 
     ### Computing sample-size
     # Getting n samples in each group of the contrast
-    n.group1 = sum(power4peaks.stats@dba.object$samples[,power4peaks.stats@contrast[1]] %in% power4peaks.stats@contrast[2], na.rm = T)
-    n.group2 = sum(power4peaks.stats@dba.object$samples[,power4peaks.stats@contrast[1]] %in% power4peaks.stats@contrast[3], na.rm = T)
+    n.group1 = sum(power4peaks.stats@dba.object$samples[,power4peaks.stats@contrast[1]] %in% power4peaks.stats@contrast[2], na.rm = TRUE)
+    n.group2 = sum(power4peaks.stats@dba.object$samples[,power4peaks.stats@contrast[1]] %in% power4peaks.stats@contrast[3], na.rm = TRUE)
 
 
     if (distribution.type %in% c("norm")) {

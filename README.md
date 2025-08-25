@@ -1,9 +1,15 @@
 ![release](https://img.shields.io/github/v/release/sebastian-gregoricchio/power4peaks)
 [![license](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://sebastian-gregoricchio.github.io/power4peaks/LICENSE.md/LICENSE)
+[![R-CMD-check](https://github.com/sebastian-gregoricchio/power4peaks/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/sebastian-gregoricchio/power4peaks/actions/workflows/R-CMD-check.yaml)
+[![pkgdown](https://github.com/sebastian-gregoricchio/power4peaks/actions/workflows/pkgdown.yaml/badge.svg)](https://github.com/sebastian-gregoricchio/power4peaks/actions/workflows/pkgdown.yaml)
+[![Codecov](https://codecov.io/gh/sebastian-gregoricchio/power4peaks/branch/main/graph/badge.svg)](https://codecov.io/gh/sebastian-gregoricchio/power4peaks)
 [![forks](https://img.shields.io/github/forks/sebastian-gregoricchio/power4peaks?style=social)](https://github.com/sebastian-gregoricchio/power4peaks/fork)
 <!-- ![update](https://badges.pufler.dev/updated/sebastian-gregoricchio/power4peaks)
 ![visits](https://badges.pufler.dev/visits/sebastian-gregoricchio/power4peaks) -->
 <!---![downloads](https://img.shields.io/github/downloads/sebastian-gregoricchio/power4peaks/total.svg)--->
+
+
+
 
 # power4peaks [<img src="https://sebastian-gregoricchio.github.io/power4peaks/resources/power4peaks_logo.png" align="right" height = 150/>](https://sebastian-gregoricchio.github.io/power4peaks)
 An R-package for power and sample size calculations for genpeaks data (ChIP-seq, ATAC-seq, CUT&amp;Tag/RUN, etc.)
