@@ -10,15 +10,14 @@ Depends:
 	R (>= 4.0.3)
 Imports:
 	BiocManager, DESeq2, DiffBind, dplyr, edgeR, fitdistrplus, ggplot2 (>= 3.3.3), ggtext, ggpubr, patchwork
-Suggests: rmarkdown, knitr, prettydoc, SSPA (>= 2.30.0), devtools, remotes
+Suggests: rmarkdown, knitr, prettydoc, devtools, remotes
 biocViews:
-Remotes:
-  SSPA = url::https://www.bioconductor.org/packages/3.12/bioc/src/contrib/SSPA_2.30.0.tar.gz 
 Encoding: UTF-8
 LazyData: True
 RoxygenNote: 7.3.2
 VignetteBuilder: knitr
 URL:
+	SSPA = https://www.bioconductor.org/packages/3.12/bioc/src/contrib/SSPA_2.30.0.tar.gz
 	https://sebastian-gregoricchio.github.io/power4peaks/
 	https://github.com/sebastian-gregoricchio/power4peaks/
 	https://sebastian-gregoricchio.github.io/
