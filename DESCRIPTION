@@ -1,8 +1,8 @@
 Package: power4peaks
 Type: Package
-Title: An R-package for power and sample size calculations for genpeaks data
+Title: Power and sample size calculations for genomics peak data
 Version: 0.1.0
-Author: Sebastian Gregoricchio
+Authors@R: person("Sebastian", "Gregoricchio", email = "s.regoricchio@nki.nl", role = c("aut", "cre"), comment = c(ORCID = "0000-0001-9209-5403"))
 Maintainer: Sebastian Gregoricchio <s.gregoricchio@nki.nl>
 Description: An R-package for power and sample size calculations for genpeaks data, such as ATAC-seq, ChIP-seq, CUT-and-Tag, etc.
 License: GNU GENERAL PUBLIC LICENSE version 3
