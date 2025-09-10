@@ -73,7 +73,7 @@ remotes::install_github("sebastian-gregoricchio/power4peaks",
 <br />
 
 ## Documentation
-With the package a [web-manual](https://sebastian-gregoricchio.github.io/power4peaks/reference/index.html) and a [vignette](https://sebastian-gregoricchio.github.io/power4peaks/doc/power4peaks.overview.vignette.html) are available.
+With the package a [web-manual](https://sebastian-gregoricchio.github.io/power4peaks/docs/reference/index.html) and a [vignette](https://sebastian-gregoricchio.github.io/power4peaks/doc/power4peaks.overview.vignette.html) are available.
 The vignette can be inspected on R as well by typing `browseVignettes("power4peaks")`.
 
 <br />
@@ -88,7 +88,7 @@ A list of all releases and respective description of changes applied could be fo
 For any suggestion, bug fixing, commentary please report it in the [issues](https://github.com/sebastian-gregoricchio/power4peaks/issues)/[request](https://github.com/sebastian-gregoricchio/power4peaks/pulls) tab of this repository.
 
 ## License
-This package is under a [GNU General Public License (version 3)](https://sebastian-gregoricchio.github.io/power4peaks/LICENSE.md/LICENSE).
+This package is under a [GNU General Public License (version 3)](https://sebastian-gregoricchio.github.io/power4peaks/LICENSE).
 
 <br />
 
