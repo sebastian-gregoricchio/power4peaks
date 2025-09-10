@@ -9,7 +9,21 @@ License: GNU GENERAL PUBLIC LICENSE version 3
 Depends:
 	R (>= 4.0.3)
 Imports:
-	BiocManager, DESeq2, DiffBind, dplyr, edgeR, fitdistrplus, ggplot2 (>= 3.3.3), ggtext, ggpubr, patchwork
+	BiocGenerics,
+	BiocManager,
+	curl,
+	DESeq2,
+	DiffBind,
+	dplyr,
+	edgeR,
+	fitdistrplus,
+	ggplot2 (>= 3.3.3),
+	ggtext,
+	ggpubr,
+	limma,
+	patchwork,
+	rvcheck,
+	stats
 Suggests: rmarkdown, knitr, prettydoc, devtools, remotes
 biocViews:
 Encoding: UTF-8

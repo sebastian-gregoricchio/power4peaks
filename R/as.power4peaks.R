@@ -7,7 +7,13 @@
 #' @param p.adjust.method String indicating the method to use to correct the p-values. One among: "holm", "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", "none". Default: \code{BH}.
 #'
 #' @return An object of class \code{power4peaks.stats}.
-
+#'
+#' @import edgeR
+#' @import DESeq2
+#' @importFrom stats model.matrix
+#' @importFrom BiocGenerics design
+#' @importFrom SummarizedExperiment colData
+#'
 #' @export as.power4peaks
 
 
@@ -49,7 +55,7 @@ as.power4peaks =
       stat.distribution = "norm"
 
       ## Collect degrees of freedom
-      design_matrix = model.matrix(object = BiocGenerics::design(dba.object$DESeq2$DEdata), data = SummarizedExperiment::colData(dba.object$DESeq2$DEdata))
+      design_matrix = stats::model.matrix(object = BiocGenerics::design(dba.object$DESeq2$DEdata), data = SummarizedExperiment::colData(dba.object$DESeq2$DEdata))
       df1 = ncol(design_matrix)
       df2 = NULL
 

@@ -15,6 +15,8 @@
 #' @import fitdistrplus
 #' @import ggplot2
 #' @import dplyr
+#' @importFrom ggpubr theme_pubr
+#' @importFrom ggtext element_markdown
 #'
 #' @return A ggplot object.
 

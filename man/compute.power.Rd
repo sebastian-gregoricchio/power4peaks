@@ -4,13 +4,14 @@
 \alias{compute.power}
 \title{compute.power}
 \usage{
-compute.power(
+\method{compute}{power}(
   power4peaks.stats,
   sample.size.range = c(0, 20),
   power.threshold = 0.8,
   estimation.method = "congrad",
   distribution.type = NULL,
-  df = NULL
+  df = NULL,
+  power.threshold.line.color = "firebrick"
 )
 }
 \arguments{
@@ -25,6 +26,8 @@ compute.power(
 \item{distribution.type}{String indicating the type of distribution to use; one among: 'norm', 't', 'f', 'chisq'. Default: \code{NULL}, automatically defined from the power4peaks.stats object.}
 
 \item{df}{Numeric value or vector (df1 and df2, required only for F-statistics) indicating the number of degrees of freedom. Default: \code{NULL}, automatically defined from the power4peaks.stats object.}
+
+\item{power.threshold.line.color}{String indicating any R-supported color to use for the power threshold line.}
 }
 \value{
 An object of class \code{power4peaks.power}.

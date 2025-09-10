@@ -49,6 +49,7 @@ setMethod(f = "show",
 
 
 #' @title power4peaks.power show-method
+#' @importFrom patchwork wrap_plots
 #' @export
 setMethod(f = "show",
           signature = "power4peaks.power",

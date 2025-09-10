@@ -8,8 +8,12 @@
 #' @param estimation.method String indicating the method to use to estimate the power (passed to \code{SSPA::sampleSize} function). One among: 'deconv', 'congrad', 'tikhonov' or 'ferreira'. Default: \code{"congrad"}.
 #' @param distribution.type String indicating the type of distribution to use; one among: 'norm', 't', 'f', 'chisq'. Default: \code{NULL}, automatically defined from the power4peaks.stats object.
 #' @param df Numeric value or vector (df1 and df2, required only for F-statistics) indicating the number of degrees of freedom. Default: \code{NULL}, automatically defined from the power4peaks.stats object.
+#' @param power.threshold.line.color String indicating any R-supported color to use for the power threshold line.
 #'
 #' @import ggplot2
+#' @importFrom ggpubr theme_pubr
+#' @importFrom ggtext element_markdown
+#  @import SSPA
 #'
 #' @return An object of class \code{power4peaks.power}.
 
@@ -22,7 +26,8 @@ compute.power =
            power.threshold = 0.8,
            estimation.method = "congrad",
            distribution.type = NULL,
-           df = NULL) {
+           df = NULL,
+           power.threshold.line.color = "firebrick") {
 
     # ### libraries
     # require(ggplot2)
@@ -148,7 +153,7 @@ compute.power =
       xlab("Sample size (per group)") +
       theme_classic() +
       geom_vline(xintercept = sum(power4peaks.stats@dba.object$samples[,power4peaks.stats@contrast[1]] %in% power4peaks.stats@contrast[2:3])/2, linetype = 3, color = "gray50") +
-      geom_hline(yintercept = power.threshold, linetype = 1, color = "firebrick") +
+      geom_hline(yintercept = power.threshold, linetype = 1, color = power.threshold.line.color) +
       scale_y_continuous(limits = c(0,1), expand = c(0,0)) +
       ggpubr::theme_pubr()
 

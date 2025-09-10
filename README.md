@@ -60,17 +60,13 @@ Alternatively the source file is available in this repository in the directory `
 
 ## Installation of `power4peaks`
 ```r
-# Install devtools from CRAN
-install.packages("devtools")
-
-# Or the development version from GitHub:
-## install.packages("devtools")
-## devtools::install_github("r-lib/devtools")
+# Install remotes from CRAN
+install.packages("remotes")
 
 # Install the Rseb package
-devtools::install_github("sebastian-gregoricchio/power4peaks",
-                         build_manual = TRUE,
-                         build_vignettes = TRUE)
+remotes::install_github("sebastian-gregoricchio/power4peaks",
+                        build_manual = TRUE,
+                        build_vignettes = TRUE)
 ```
 <br />
 
