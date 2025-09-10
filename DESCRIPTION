@@ -21,6 +21,7 @@ Imports:
 	ggtext,
 	ggpubr,
 	limma,
+	methods,
 	patchwork,
 	rvcheck,
 	stats,
