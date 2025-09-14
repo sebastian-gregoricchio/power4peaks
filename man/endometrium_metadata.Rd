@@ -12,16 +12,19 @@ data.frame (8 rows x 5 columns)
   \item{\code{Factor}}{The factor for which the ChIP was performed, in this case estrogen receptor alpha (ERa)}
   \item{\code{Treatment}}{treatment applied to the cells or patients, in this case none, equivalent ot the 'Condition' column}
   \item{\code{Condition}}{condition applied to the cells or patients, in this case none, equivalent ot the 'Treatment' column}
-  \item{\code{Replicate}}{id of the biological replicate, in this case each tissue is considered an indipendent biological replicate}
+  \item{\code{Replicate}}{id of the biological replicate, in this case each tissue is considered as an indipendent biological replicate}
 }
 }
 \source{
-Gregoricchio et al. (Genome Biology, 2025) \url{https://doi.org/10.1186/s13059-025-03596-5}
+\href{https://ega-archive.org/studies/EGAS00001007240}{EGAS00001007240} and \href{https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE253900}{GSE253900}.
 }
 \usage{
 endometrium_metadata
 }
 \description{
 Metadata table for differential analyses of ERa ChIP-seq data performed in normal and tumor endometrium from human patients, Gregoricchio et al. (Genome Biology, 2025).
+}
+\references{
+Gregoricchio et al. (Genome Biology, 2025) \doi{https://doi.org/10.1186/s13059-025-03596-5}
 }
 \keyword{datasets}

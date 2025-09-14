@@ -7,3 +7,29 @@
 \description{
 power4peaks.stats class
 }
+\section{Slots}{
+
+\describe{
+\item{\code{dba.object}}{original DBA object derived from \code{DiffBind}}
+
+\item{\code{contrast}}{contrast that has been used}
+
+\item{\code{design}}{design matrix obtained from the analyses}
+
+\item{\code{diff.method}}{differential peaks analyses method used (DEseq2 or edgeR)}
+
+\item{\code{p.adjust.method}}{p-value adjustment method used}
+
+\item{\code{diff.object}}{differential peak analyses object obtained from the DBA object}
+
+\item{\code{results}}{differential peak analyses results}
+
+\item{\code{statistics}}{values of the statistics obtained from the differential peak analyses}
+
+\item{\code{stat.distribution}}{type of distribution of the statistics (e.g., normal, chi-squared, t, ...)}
+
+\item{\code{df1}}{values of the first degree of freedom}
+
+\item{\code{df2}}{values of the second degree of freedom}
+}}
+

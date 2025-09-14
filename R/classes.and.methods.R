@@ -1,6 +1,18 @@
 #' @title power4peaks.stats class
 #' @name power4peaks.stats
-#' @exportClass power4peaks.stats
+#' @slot dba.object original DBA object derived from \code{DiffBind}
+#' @slot contrast contrast that has been used
+#' @slot design design matrix obtained from the analyses
+#' @slot diff.method differential peaks analyses method used (DEseq2 or edgeR)
+#' @slot p.adjust.method p-value adjustment method used
+#' @slot diff.object differential peak analyses object obtained from the DBA object
+#' @slot results differential peak analyses results
+#' @slot statistics values of the statistics obtained from the differential peak analyses
+#' @slot stat.distribution type of distribution of the statistics (e.g., normal, chi-squared, t, ...)
+#' @slot df1 values of the first degree of freedom
+#' @slot df2 values of the second degree of freedom
+#'
+#' @export
 
 setClass(Class = "power4peaks.stats",
          slots = list(dba.object = "ANY",
@@ -17,9 +29,18 @@ setClass(Class = "power4peaks.stats",
 
 
 
+
+
 #' @title power4peaks.power class
 #' @name power4peaks.power
-#' @exportClass power4peaks.power
+#'
+#' @slot pilot.data output of \href{https://rdrr.io/bioc/SSPA/man/pilotData.html}{\code{SSPA:::pilotData}}, collects the info relative to statistics, p-value and sample size
+#' @slot sample.size output of \href{https://rdrr.io/bioc/SSPA/man/sampleSize.html}{\code{SSPA:::sampleSize}}, contains the estimation of the proportion of non-differentially expressed genes and the density of the effect sizes
+#' @slot power output of \href{https://rdrr.io/bioc/SSPA/man/predictpower.html}{\code{SSPA:::predictpower}}
+#' @slot effect.size.plot ggplot object depicting the effect as function of the group size
+#' @slot power.plot ggplot object depicting the power as function of the group size
+#'
+#' @export
 
 setClass(Class = "power4peaks.power",
          slots = list(pilot.data = "ANY",
@@ -27,7 +48,6 @@ setClass(Class = "power4peaks.power",
                       power = "ANY",
                       effect.size.plot = "ANY",
                       power.plot = "ANY"))
-
 
 
 

@@ -10,7 +10,6 @@ Depends:
 	R (>= 4.0.3)
 Imports:
 	BiocGenerics,
-	BiocManager,
 	curl,
 	DESeq2,
 	DiffBind,
@@ -27,6 +26,7 @@ Imports:
 	stats,
 	SummarizedExperiment
 Suggests:
+  BiocManager,
   rmarkdown,
   knitr,
   prettydoc,
@@ -35,7 +35,8 @@ Suggests:
 biocViews:
 Encoding: UTF-8
 LazyData: True
-RoxygenNote: 7.3.2
+LazyDataCompression: xz
+RoxygenNote: 7.3.3
 VignetteBuilder: knitr
 URL:
 	SSPA = https://www.bioconductor.org/packages/3.12/bioc/src/contrib/SSPA_2.30.0.tar.gz

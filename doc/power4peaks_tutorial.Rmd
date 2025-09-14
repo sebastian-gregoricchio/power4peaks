@@ -1,0 +1,748 @@
+---
+title: <font color="#ff8000">**`power4peaks` tutorial**</font>
+author: 
+- name: <font color="gray">Sebastian Gregoricchio</font>
+  affiliation:
+    - "Netherlands Cancer Institute (NKI), Department of Oncogenomics, Amsterdam, The Netherlands"
+  email: "s.gregoricchio@nki.nl"
+package: "*[power4peaks](https://sebastian-gregoricchio.github.io/power4peaks/)*"
+date: <font color="gray">`r format(Sys.time(), '%d %B, %Y')`</font>
+output:
+ html_document:
+    toc: yes
+    toc_depth: 4
+    toc_float: yes
+    number_sections: true
+    df_print: paged
+    theme: "united"
+    code_folding: show
+vignette: >
+  %\VignetteIndexEntry{power4omics tutorial}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+<style>
+body { text-align: justify }
+li { margin-bottom: 1em; }
+</style>
+
+```{r setup, include=FALSE}
+if (Sys.info()[["sysname"]] == "Darwin") {
+  knitr::opts_chunk$set(echo = TRUE,
+                        collapse = TRUE,
+                        comment = ">",
+                        warning = FALSE,
+                        message = FALSE,
+                        fig.align = "center",
+                        rows.print = 12,
+                        dev = "png",
+                        dpi = 96)
+} else {
+  knitr::opts_chunk$set(echo = TRUE,
+                        collapse = TRUE,
+                        comment = ">",
+                        warning = FALSE,
+                        message = FALSE,
+                        fig.align = "center",
+                        rows.print = 12)
+}
+```
+
+
+```{r include=FALSE}
+wd = getwd()
+```
+
+
+--------------------------------------
+
+<br>
+
+# <font color="#074fa5">**Introduction**</font>
+`SSPA` **[1-2]**
+
+--------------------------------------
+
+<br>
+
+# <font color="#074fa5">**Perform differential analyses**</font>
+Hereafter we will present 3 datasets for which we will determine differential peaks and the consequent power calculations for these analyses:
+
+- `tamoxifen` (DESeq2-mode): ER$\alpha$ ChIP-seq in human breast cancer cell lines responsive or not to tamoxifen treatment (estrogen receptor inhibitor), from [Ross-Innes *et al.* (Nature, 2012)](https://doi.org/10.1038/nature10730) **[3]**;
+- `endometrium` (edgeR-mode): ER$\alpha$ ChIP-seq in human endometrial tissues derived from healthy donors of endometrial cancer patients, from [Gregoricchio *et al.* (Genome Biology, 2025)](https://doi.org/10.1186/s13059-025-03596-5) **[4]**;
+- `atac_mm` (DESeq2-mode): ATAC-seq data from [T. Bruno, M.C. Cappelletto, C. Cortile et al. (Blood, 2025)](https://doi.org/10.1182/blood.2025028441) **[5]** include 11 Monoclonal Gammopathy of Undetermined Significance (MGUS) and 11 Multiple Myeloma (MM) human samples. Of note, we selected the 11 MM samples (out of 55) with the highest number of peaks (see Figure 1B from the original article) in order to have a similar sample size between the two groups.
+
+The final differential analysis results of each dataset are available in `power4peaks`, and accessible as follows:
+
+```{r load_p4p_data, eval = FALSE}
+data("tamoxifen", package = "power4peaks")
+data("endometrium", package = "power4peaks")
+data("atac_mm", package = "power4peaks")
+```
+
+However, hereafter we will show how to obtain these results.
+
+<br>
+
+## Differential results {.tabset}
+The input of `power4peaks` are DBA objected obtained from differential peaks analyses performed usinf `DiffBind`.<br>
+Hereafter we show all the steps required to processes the data and perform differential analyses.
+
+
+### Tamoxifen
+The "tamoxifen" dataset is available in the Biocondutor package [`DiffBind`](https://bioconductor.org/packages/devel/bioc/html/DiffBind.html) **[2]**, and data can be downloaded as follow:
+
+```{r download_tam_data, eval = FALSE}
+## load DiffBind
+require(DiffBind)
+
+data_url <- "https://content.cruk.cam.ac.uk/bioinformatics/software/DiffBind/DiffBind_vignette_data.tar.gz"
+file <- basename(url)
+tmpdir <- tempdir()
+options(timeout=600)
+download.file(url, file.path(tmpdir,file))
+untar(file.path(tmpdir,file), exdir = tmpdir)
+
+```
+
+<br>
+
+Analyses can be performed in one single step:
+
+```{r tam_dba_analysis, eval = FALSE}
+setwd(file.path(tmpdir,"DiffBind_Vignette"))
+tamoxifen <- dba.analyze(file.path(tmpdir,"DiffBind_Vignette/tamoxifen.csv"))
+
+tamoxifen
+```
+
+```{r show_tamoxifen_db, echo=FALSE}
+power4peaks::tamoxifen
+```
+
+
+
+
+### Endomtrium
+For this data set, the BAM files (GRCh37/Hg19) are deposited on EGA under accession number [EGAS00001007240 > EGAD00001010896](https://ega-archive.org/datasets/EGAD00001010896), while the peak files can be downloaded from GEO under accession number [GSE235241 > GSE253900](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE253900).
+
+Here after we will show how to generate the `DiffBind` object (class `dba`) available in the `power4peaks` package with the name of "endometrium".
+
+<br>
+
+#### Load the data in `DiffBind`
+```{r load_endo_meta}
+## Load endometrium metadata from power4omics
+data("endometrium_metadata", package = "power4peaks")
+endometrium_metadata
+```
+
+
+```{r DBA_endometrium, eval = FALSE}
+require(DiffBind)
+
+## Setup DiffBind object/experiment
+dba.endometrium =
+  dba(sampleSheet = endometrium_metadata,
+      config = data.frame(AnalysisMethod = DBA_EDGER,
+                          th = 0.05,
+                          design = TRUE,
+                          cores = 4,
+                          RunParallel = TRUE,
+                          doBlacklist = TRUE,
+                          doGreylist = FALSE))
+```
+
+```
+H147 Endometrium ERa Normal Normal NA bed
+H12 Endometrium ERa Normal Normal NA bed
+HA Endometrium ERa Normal Normal NA bed
+HB Endometrium ERa Normal Normal NA bed
+T5 Endometrium ERa Tumor Tumor NA bed
+T55 Endometrium ERa Tumor Tumor NA bed
+T33 Endometrium ERa Tumor Tumor NA bed
+T102 Endometrium ERa Tumor Tumor NA bed
+```
+
+
+```{r blacklist_endo, eval = FALSE}
+# Apply black list
+dba.endometrium = dba.blacklist(dba.endometrium, blacklist = DBA_BLACKLIST_GRCH37)
+```
+
+```
+Genome detected: Hsapiens.NCBI.GRCh37
+Applying blacklist...
+Removed: 137 of 135444 intervals.
+Removed: 54 merged (of 67512) and 34 (of 30155) consensus.
+```
+
+
+```{r counts_endom, eval = FALSE}
+## Compute counts at peaks
+dba.endometrium = dba.count(dba.endometrium, bParallel = TRUE, fragmentSize = 200)
+
+## Normalize counts
+dba.endometrium = dba.normalize(dba.endometrium) 
+
+## Define contrast
+dba.endometrium = dba.contrast(dba.endometrium, contrast=c("Condition", "Tumor", "Normal"))
+
+## Differential binding
+endometrium = dba.analyze(dba.endometrium, method = DBA_EDGER)
+endometrium
+```
+
+```{r show_endo_dba, echo=FALSE}
+power4peaks::endometrium
+```
+
+
+
+
+### ATAC-seq
+For this data set we re-analyzed the data starting from the FASTQ data as follows.
+
+<br>
+
+#### Fastq download
+For the download we use the [`multiDUMP`](https://github.com/sebastian-gregoricchio/multiDUMP) pipeline.<br>
+In `power4peaks` we provide a SRA run table for the download, namely `atac_mm_SraRunTable`. We selected the 11 MM samples (out of 55) with the highest number of peaks (see Figure 1B from the original article) in order to have a similar sample size between the two groups.
+
+<br>
+
+##### Extracting data information
+```{r, atac_get_fastq_info}
+require(dplyr)
+
+## MM samples to keep
+MM_sample_selection = c("022", "025", "059", '069', "027", "009", "054", "073", "033", "013", "028")
+
+## Read and filter runs table
+sra = 
+  power4peaks::atac_mm_SraRunTable %>%
+  dplyr::filter(Sample_Alias %in% paste0("ATAC_seq_tumour_", MM_sample_selection, "_MM") | 
+                grepl("MGUS", Sample_Alias)) %>%
+  dplyr::select(Run, Sample_Alias)
+
+sra
+```
+
+<br>
+
+##### Download the data
+```{bash, download_fastq, eval=FALSE}
+snakemake \
+-s </target/folder>/multiDUMP/workflow/multiDUMP.snakefile  \
+--cores 5 \
+--config \
+TABLE="./tables/download.run_config.txt" \
+OUTDIR="./sources/fastq" \
+SUFFIX="['_R1','_R2']" \
+EXTENSION=".fastq.gz" \
+--keep-going
+```
+
+<br>
+
+
+#### Data pre-processing
+For the mapping and analysis of the FASTQ data we use the [`snakeATAC`](https://github.com/sebastian-gregoricchio/snakeATAC) pipeline.
+
+<br>
+
+##### Mapping ATAC to Hg38
+```{bash, mapping, eval = FALSE}
+snakemake \
+--cores 20 \
+-s </target/folder>/snakeATAC/workflow/snakeATAC_mapping.snakefile \
+--configfile ./sources/snakeATAC_mapping_configfile.yaml \
+--config \
+fastq_directory="./sources/fastq" \
+output_directory="./sources/mapping" \
+genome_fasta="/path/to/GRCh38.d1.vd1.fa" \
+--keep-going
+```
+
+The mapping configuration file can be find here after (click on "Show" to reveal the code).
+
+```{bash, class.source = 'fold-hide', eval = FALSE}
+# This .yaml configuration file contains all variables used by the snakemake pipeline
+# DO NOT CHANGE parameter names without changing it in Snakefile as well
+# On the other hand, some parameter values have to be inevitably modifed
+# *************************************************************************************
+
+# @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ DNA MAPPING @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+### 0. General workflow parameters
+fastq_directory:
+output_directory:
+genome_fasta:
+umi_present: False
+fastq_suffix: ".fastq.gz"
+read_suffix: ['_R1', '_R2']
+
+
+### 1. FASTQ trimming
+cutadapt_trimm_options: ''
+fw_adapter_sequence: "CTGTCTCTTATACACATCT"
+rv_adapter_sequence: "CTGTCTCTTATACACATCT"
+run_fastq_qc: True
+
+### 2. BWA mapping
+bwa_options: ''
+
+
+### 2. BAM filtering
+remove_duplicates: True
+MAPQ_threshold: 20
+remove_other_chromosomes_pattern: "CMV|HBV|HTLV|HPV|SV40|MCV|KSHV|chrUn|random|HCV|HIV|EBV"
+```
+
+<br>
+
+##### Peak calling and analyses
+```{bash, peak_calling, eval = FALSE}
+snakemake \
+--cores 20 \
+-s </target/folder>/snakeATAC/workflow/snakeATAC_analyses.snakefile \
+--configfile ./sources/snakeATAC_analyses_config_MM.vs.MGUS.yaml \
+--keep-going
+```
+
+
+The analyses configuration file can be find here after (click on "Show" to reveal the code). Notice that paths to genome and blacklist must be adapted to user's file location.
+
+```{bash, class.source = 'fold-hide', eval = FALSE}
+# This .yaml configuration file contains all variables used by the snakemake pipeline
+# DO NOT CHANGE parameter names without changing it in Snakefile as well
+# On the other hand, some parameter values have to be inevitably modifed
+# ****************************************************************************************
+
+# @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ ESSENTIAL PARAMETERS @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+### 1. General workflow parameters  ======================================================
+workflow_configuration:
+  runs_directory: "./sources/mapping/02_BAM"
+  output_directory: "./sources/peak_calling"
+
+bam_features:
+  bam_suffix: "_mapq20_sorted_woMT_dedup.bam"
+  skip_bam_filtering: True
+  remove_other_chromosomes_pattern: "^CMV|^HBV|^HTLV|^HPV|^SV40|^MCV|^KSHV|^chrUn|random|^HCV|^HIV|EBV"
+  umi_present: False
+  remove_duplicates: True
+  MAPQ_threshold: 20
+  minFragmentLength: 0
+  maxFragmentLength: 2000
+
+genomic_annotations:
+  genome_id: "hg38"
+  genome_fasta: "/path/to/GRCh38.d1.vd1.fa"
+  blacklist: "/path/to/hg38-blacklist.v2.bed"
+  effective_genomeSize: 2900338458
+  ignore_for_normalization: "X Y MT M KI270728.1 KI270727.1 KI270442.1 KI270729.1 GL000225.1 KI270743.1 GL000008.2 GL000009.2 KI270747.1 KI270722.1 GL000194.1 KI270742.1 GL000205.2 GL000195.1 KI270736.1 KI270733.1 GL000224.1 GL000219.1 KI270719.1 GL000216.2 KI270712.1 KI270706.1 KI270725.1 KI270744.1 KI270734.1 GL000213.1 GL000220.1 KI270715.1 GL000218.1 KI270749.1 KI270741.1 GL000221.1 KI270716.1 KI270731.1 KI270751.1 KI270750.1 KI270519.1 GL000214.1 KI270708.1 KI270730.1 KI270438.1 KI270737.1 KI270721.1 KI270738.1 KI270748.1 KI270435.1 GL000208.1 KI270538.1 KI270756.1 KI270739.1 KI270757.1 KI270709.1 KI270746.1 KI270753.1 KI270589.1 KI270726.1 KI270735.1 KI270711.1 KI270745.1 KI270714.1 KI270732.1 KI270713.1 KI270754.1 KI270710.1 KI270717.1 KI270724.1 KI270720.1 KI270723.1 KI270718.1 KI270317.1 KI270740.1 KI270755.1 KI270707.1 KI270579.1 KI270752.1 KI270512.1 KI270322.1 GL000226.1 KI270311.1 KI270366.1 KI270511.1 KI270448.1 KI270521.1 KI270581.1 KI270582.1 KI270515.1 KI270588.1 KI270591.1 KI270522.1 KI270507.1 KI270590.1 KI270584.1 KI270320.1 KI270382.1 KI270468.1 KI270467.1 KI270362.1 KI270517.1 KI270593.1 KI270528.1 KI270587.1 KI270364.1 KI270371.1 KI270333.1 KI270374.1 KI270411.1 KI270414.1 KI270510.1 KI270390.1 KI270375.1 KI270420.1 KI270509.1 KI270315.1 KI270302.1 KI270518.1 KI270530.1 KI270304.1 KI270418.1 KI270424.1 KI270417.1 KI270508.1 KI270303.1 KI270381.1 KI270529.1 KI270425.1 KI270396.1 KI270363.1 KI270386.1 KI270465.1 KI270383.1 KI270384.1 KI270330.1 KI270372.1 KI270548.1 KI270580.1 KI270387.1 KI270391.1 KI270305.1 KI270373.1 KI270422.1 KI270316.1 KI270338.1 KI270340.1 KI270583.1 KI270334.1 KI270429.1 KI270393.1 KI270516.1 KI270389.1 KI270466.1 KI270388.1 KI270544.1 KI270310.1 KI270412.1 KI270395.1 KI270376.1 KI270337.1 KI270335.1 KI270378.1 KI270379.1 KI270329.1 KI270419.1 KI270336.1 KI270312.1 KI270539.1 KI270385.1 KI270423.1 KI270392.1 KI270394.1"
+
+
+
+### 2. MACS3 peak calling ----------------------------------------------------------------
+peak_calling:
+  qValue_cutoff: 0.001
+  call_summits: True
+  FRiP_threshold: 20 #%
+  peak_score_heatmap:
+    plot_heatmap: False
+    raw_heatmap_color: "Blues"
+    zScore_heatmap_color: "seismic"
+
+
+
+## 3. Quality controls -------------------------------------------------------------------
+quality_controls:
+  fragmentSize_window_length: 1000 #bp
+  multiBigwigSummary_binning_window_size: 10000 #bp
+  correlation_heatmap_color: "Blues"
+  plotFingerprint:
+    binSize: 500 #bp
+    sampledRegions: 500000
+    extra_parameters: ""
+
+
+
+### 4. Differential TF-binding analyses --------------------------------------------------
+differential_TF_binding:
+  perform_differential_analyses: False
+  sample_groups_table: ""
+  merged_bigwig_binSize: 10
+  group_comparisons: [['MM','MGUS']]
+  motifs_file: ""
+  whitelist: ""
+  flanking_bp: 60
+
+
+
+### 5. Somatic Variants ------------------------------------------------------------------
+somatic_variants:
+  skip_base_quality_recalibration: False
+  call_SNPs: False
+  call_indels: False
+  dbsnp_file: ""
+  # To make dbSNP without 'chr' -->  awk '{gsub(/\chr/, "")}1' your.vcf > withoutchr.vcf
+  DP_snp_threshold: 20
+  QUAL_snp_threshold: 0
+  DP_indel_threshold: 20
+  QUAL_indel_threshold: 0
+  SnpSift_vcf_fields_to_extract: [ "CHROM", "POS", "ID", "REF", "ALT", "QUAL", "DP", "AF", "FILTER", "FORMAT", "GEN[*].GT", "GEN[*].AD", "GEN[*].AF" ]
+
+
+
+### 6. Copy Number Variations ------------------------------------------------------------
+copy_number_variation:
+  call_CNV: False
+  chromosome_prefix: ""
+  kb_bin_resolution: 50
+  CNA_threshold: 2
+  CNA_plot_line_colors: "red"
+  CNA_plot_point_size: 0.5
+  CNA_plot_point_transparency: 0.5
+  corrected_bigWig_binSize: 10 #bp
+```
+
+
+
+<br>
+
+#### Differential analyses
+##### Load data in R
+We perform differential analyses using the [`DiffBind`](https://bioconductor.org/packages/release/bioc/html/DiffBind.html) R-package.<br>
+It requires a metadata table in which we indicate the path ot the BAMs and to the peaks (.narrowPeak file) and additional info about the sample groups.
+
+```{r, metadata_atac_diffbind, eval = FALSE}
+## Get BAM list
+bams <- list.files(path = "./sources/mapping/02_BAM",
+                   pattern = "_sorted_woMT_dedup.bam$",
+                   full.names = TRUE)
+
+## Get peak list
+peaks <- list.files(path = "./sources/peak_calling/04_MACS3_peaks",
+                    pattern = "_peaks_chr.narrowPeak",
+                    full.names = TRUE)
+
+metadata <-
+  data.frame(SampleID = gsub("_mapq20_sorted_woMT_dedup.bam|ATAC_seq_|_MGUS|_MM", "", basename(bams)),
+             Tissue = "bone marrow",
+             Factor = "ATAC-seq",
+             Condition = ifelse(test = grepl("MGUS", basename(bams)), yes = "MGUS", no = "MM"),
+             bamReads = bams,
+             Peaks = peaks,
+             PeakCaller = "narrow")
+
+metadata
+```
+
+```{r show_atac_metadata, echo=FALSE}
+power4peaks::atac_mm$samples
+```
+
+<br>
+
+Now the `DiffBind` analyses object (dba) can be created.
+
+```{r, make_dba, eval=FALSE}
+dba <- dba(sampleSheet = metadata,
+           config = data.frame(AnalysisMethod = DBA_DESEQ2,
+                               th = 0.01, # FDR threshold
+                               design = TRUE,
+                               cores = 8,
+                               RunParallel = TRUE,
+                               doBlacklist = TRUE,
+                               doGreylist = FALSE))
+```
+
+```
+CB01 bone marrow ATAC-seq MGUS  NA narrow
+CB02 bone marrow ATAC-seq MGUS  NA narrow
+CB09 bone marrow ATAC-seq MGUS  NA narrow
+CB14 bone marrow ATAC-seq MGUS  NA narrow
+CB16 bone marrow ATAC-seq MGUS  NA narrow
+CB18 bone marrow ATAC-seq MGUS  NA narrow
+CB19 bone marrow ATAC-seq MGUS  NA narrow
+CB20 bone marrow ATAC-seq MGUS  NA narrow
+CB21 bone marrow ATAC-seq MGUS  NA narrow
+CB22 bone marrow ATAC-seq MGUS  NA narrow
+CB23 bone marrow ATAC-seq MGUS  NA narrow
+tumour_009 bone marrow ATAC-seq MM  NA narrow
+tumour_013 bone marrow ATAC-seq MM  NA narrow
+tumour_022 bone marrow ATAC-seq MM  NA narrow
+tumour_025 bone marrow ATAC-seq MM  NA narrow
+tumour_027 bone marrow ATAC-seq MM  NA narrow
+tumour_028 bone marrow ATAC-seq MM  NA narrow
+tumour_033 bone marrow ATAC-seq MM  NA narrow
+tumour_054 bone marrow ATAC-seq MM  NA narrow
+tumour_059 bone marrow ATAC-seq MM  NA narrow
+tumour_069 bone marrow ATAC-seq MM  NA narrow
+tumour_073 bone marrow ATAC-seq MM  NA narrow
+```
+
+<br>
+
+##### Generating counts
+```{r, atac_counts, eval=FALSE}
+## Apply black list
+dba <- dba.blacklist(dba, blacklist = DiffBind::DBA_BLACKLIST_HG38)
+```
+
+```
+Genome detected: Hsapiens.UCSC.hg38
+Applying blacklist...
+Removed: 171 of 726291 intervals.
+Removed: 45 merged (of 110154) and 19 (of 65137) consensus.
+```
+
+```{r, atac_count_reads, eval=FALSE}
+## Counting reads in peaks
+dba <- dba.count(dba, bParallel = TRUE)
+
+## Count normalization (library size)
+dba <- dba.normalize(dba)
+```
+
+<br>
+
+##### Differential binding analysis
+First step is to set up the contrast: which group needs to be compare to which one. In this case will be MM-vs-MGUS.<br>
+The format is the following: `contrast = c("metadata_column_id", "group1", "group2")`, where the fold change is computed as group1/group2.
+
+```{r, contrast_atac, eval = FALSE}
+atac_mm <- dba.contrast(dba, contrast = c("Condition", "MM", "MGUS"))
+```
+
+The second step instead involves the differential analyses itself (in our case we set to use `DESeq2`).
+
+```{r, diff_analyses_atac, eval = FALSE}
+atac_mm <- dba.analyze(dba_diff, design = "~ Condition")
+atac_mm
+```
+
+The DBA object just obtained is equivalent ot the one provided in the `power4peaks` package:
+
+```{r show_atac_dba, echo = FALSE}
+power4peaks::atac_mm
+```
+
+
+## {-}
+
+<br>
+
+Note that all the data sets can be loaded as:
+
+```{r load_p4p_data_RUN}
+data("tamoxifen", package = "power4peaks")
+data("endometrium", package = "power4peaks")
+data("atac_mm", package = "power4peaks")
+```
+
+
+---------------------------------------
+
+<br>
+
+# <font color="#074fa5">**Build `power4peaks` objects**</font> {.tabset}
+The function `as.power4peaks` can automatically convert a `DBA` object (from `DiffBind`) in a `power4peaks.stats` one.<br>
+A `power4peaks.stats` object is an S4 vector containing the following slots:
+
+| Slot id             | Description                                                                 |
+| ------------------: | :-------------------------------------------------------------------------- |
+| *dba.object*        | original DBA object derived from `DiffBind`                                 |
+| *contrast*          | contrast that has been used                                                 |
+| *design*            | design matrix obtained from the analyses                                    |
+| *diff.method*       | differential peaks analyses method used (DEseq2 or edgeR)                   |
+| *p.adjust.method*   | p-value adjustment method used                                              |
+| *diff.object*       | differential peak analyses object obtained from the DBA object              |
+| *results*           | differential peak analyses results                                          |
+| *statistics*        | values of the statistics obtained from the differential peak analyses       |
+| *stat.distribution* | type of distribution of the statistics (e.g., normal, chi-squared, t, ...)  |
+| *df1*               | values of the first degree of freedom                                       |
+| *df2*               | values of the second degree of freedom                                      |
+
+<br>
+
+## Tamoxifen
+```{r convert_p4p_tam}
+library(power4peaks)
+
+p4p_tamoxifen = as.power4peaks(tamoxifen)
+p4p_tamoxifen
+```
+
+## Endometrium
+```{r convert_p4p_endo}
+library(power4peaks)
+
+p4p_endometrium = as.power4peaks(endometrium)
+p4p_endometrium
+```
+
+## ATAC-seq
+```{r convert_p4p_atac}
+library(power4peaks)
+
+p4p_atac_mm = as.power4peaks(atac_mm)
+p4p_atac_mm
+```
+
+# {-}
+
+
+<br>
+
+## Validate statistics distribution {.tabset}
+The most important parameters for the computation of the statistical power of the differential analyses using `SSPA` are the distribution of the statistics and the degrees of freedom.
+
+Therefore, to validate the distribution type of the statistics, it is possible to visualize the empirical statistics distribution to the theoretical ones using the function `plot.stat.distribution`:
+
+### Tamoxifen
+```{r show_curves_tam, fig.width=6, fig.height=3}
+plot.stat.distribution(p4p_tamoxifen)
+```
+
+### Endometrium
+```{r show_curves_endo, fig.width=6, fig.height=3}
+plot.stat.distribution(p4p_endometrium)
+```
+
+### ATAC-seq
+```{r show_curves_atac, fig.width=6, fig.height=3}
+plot.stat.distribution(p4p_atac_mm)
+```
+
+
+## {-}
+
+
+-------------------------------------
+
+<br>
+
+# <font color="#074fa5">**Compute statistical power**</font> {.tabset}
+The function `compute.power` will allow for the power and sample size calculation using a `power4peaks.stats` object as input.<br>
+This will produce and object of class `power4peaks.power` which is an S4 vector containing the following slots:
+
+| Slot id            | Description                                                                 |
+| -----------------: | :-------------------------------------------------------------------------- |
+| *pilot.data*       | output of [`SSPA:::pilotData`](https://rdrr.io/bioc/SSPA/man/pilotData.html), collects the info relative to statistics, p-value and sample size |
+| *sample.size*      | output of [`SSPA:::sampleSize`](https://rdrr.io/bioc/SSPA/man/sampleSize.html), contains the estimation of the proportion of non-differentially expressed genes and the density of the effect sizes.                                   |
+| *power*            | output of [`SSPA:::predictpower`](https://rdrr.io/bioc/SSPA/man/predictpower.html) |
+| *effect.size.plot* | ggplot object depicting the effect as function of the group size                   |
+| *power.plot*       | ggplot object depicting the power as function of the group size                    |
+
+<br>
+
+## Tamoxifen
+```{r power_tam, fig.width=6, fig.height=5}
+tamoxifen_power <- compute.power(p4p_tamoxifen)
+tamoxifen_power
+```
+
+## Endometrium
+```{r power_endo, fig.width=6, fig.height=5}
+endometrium_power <- compute.power(p4p_endometrium)
+endometrium_power
+```
+
+## ATAC-seq
+```{r power_atac, fig.width=6, fig.height=5}
+atac_mm_power <- compute.power(p4p_atac_mm)
+atac_mm_power
+```
+
+# {-}
+
+
+* The top panel (effect size plot) depicts the distribution of the effect size. The highest the density the highest is the impact of the group/sample size on the power of the differential analyses. The $\pi$<sup>0</sup> indicates the estimated proportion of non-differential peaks (proportion of test under the null hypothesis).<br>
+* The lower panel (power plot) depicts the power of the statistics that is achieved with a certain amount of samples per group. The red horizontal line indicates the power threshold indicated by the user (default: 0.80), while the gray dashed vertical line indicates the average group size present in the data set tested.
+
+
+
+<br>
+
+--------------------------------------
+
+# <font color="#5791AB">**References**</font>
+
+1. van Iterson M, 't Hoen PA, Pedotti P, Hooiveld GJ, den Dunnen JT, van Ommen GJ, Boer JM, Menezes RX. Relative power and sample size analysis on gene expression profiling data. BMC Genomics. 2009 Sep 17;10:439. doi: [10.1186/1471-2164-10-439](https://doi.org/10.1186/1471-2164-10-439). PMID: 19758461; PMCID: PMC2759969.
+
+2. van Iterson M, van de Wiel MA, Boer JM, de Menezes RX. General power and sample size calculations for high-dimensional genomic data. Stat Appl Genet Mol Biol. 2013 Aug;12(4):449-67. doi: [10.1515/sagmb-2012-0046](https://doi.org/10.1515/sagmb-2012-0046). PMID: 23934609.
+
+3. Ross-Innes CS, Stark R, Teschendorff AE, Holmes KA, Ali HR, Dunning MJ, Brown GD, Gojis O, Ellis IO, Green AR, Ali S, Chin SF, Palmieri C, Caldas C, Carroll JS. Differential oestrogen receptor binding is associated with clinical outcome in breast cancer. Nature. 2012 Jan 4;481(7381):389-93. doi: [10.1038/nature10730](https://doi.org/10.1038/nature10730). PMID: 22217937; PMCID: PMC3272464.
+
+4. Gregoricchio S, Kojic A, Hoogstraat M, Schuurman K, Stelloo S, Severson TM, O'Mara TA, Droog M, Singh AA, Glubb DM, Wessels LFA, Vermeulen M, van Leeuwen FE, Zwart W. Endometrial tumorigenesis involves epigenetic plasticity demarcating non-coding somatic mutations and 3D-genome alterations. Genome Biol. 2025 May 9;26(1):124. doi: [10.1186/s13059-025-03596-5](https://doi.org/10.1186/s13059-025-03596-5). PMID: 40346709; PMCID: PMC12063248.
+
+5. Bruno T, Cappelletto MC, Cortile C, Di Giovenale S, Amadio B, De Nicola F, Falcone I, Giuliani S, Palermo B, Catena V, Ciuffreda L, Cerruti F, Cascio P, Merola R, Masi S, De Pascale V, Annibali O, Ferraro S +39, Gumenyuk S, Pisani F, Marchesi F, Mengarelli A, Fanciulli M, Corleone G. Nuclear respiratory factor 1 promotes cell survival in multiple myeloma under proteasome inhibition therapy. Blood. 2025 Sep 8:blood.2025028441. doi: [10.1182/blood.2025028441](https://doi.org/10.1182/blood.2025028441). Epub ahead of print. PMID: 40920573.
+
+
+<br>
+
+    
+<hr style="border: 1.5px solid black;" />
+
+
+# <font color="#b04004">**Session info**</font>
+```{r session_info, echo=FALSE}
+session.info = function(return.session = FALSE,
+                        print.versions = TRUE,
+                        return.versions = FALSE,
+                        session.file = NULL) {
+  
+  session = sessionInfo()
+  
+  list.v = list(`R version:` = session$R.version$version.string,
+                `Base packages:` = sort(session$basePkgs),
+                `Other attached packages:` = sort(paste(names(session$otherPkgs),
+                                                        installed.packages()[names(session$otherPkgs), "Version"],
+                                                        sep = "_")),
+                `Loaded via a namespace (and not attached):` = sort(paste(names(session$loadedOnly),
+                                                                          installed.packages()[names(session$loadedOnly), "Version"],
+                                                                          sep = "_")))
+  # Indicating when a section is empty
+  for (i in 1:length(list.v)) {
+    if (length(list.v[[i]]) == 0) {
+      (list.v[[i]] = "No packages loaded in this section")}
+  }
+  
+  versions = list(session = session,
+                  versions = list.v)
+  
+  if (print.versions == TRUE) {print(versions$versions, quote = FALSE)}
+  
+  if (return.session == TRUE | return.versions == TRUE) {
+    if (return.session == TRUE & return.versions == FALSE) {
+      return(versions$session)} else if (return.session == FALSE & return.versions == TRUE) {
+        return(versions$versions)} else {return(versions)}
+  }
+  
+  
+  
+  # Export sessionInfo file if required
+  if (!is.null(session.file)) {
+    session.title = paste("### Session info:", Sys.time(), "###")
+    
+    write(x = paste0(rep("#", nchar(session.title)), collapse = ""), file = session.file, append = FALSE)
+    write(x = session.title, file = session.file, append = TRUE)
+    write(x = paste0(paste0(rep("#", nchar(session.title)), collapse = ""), "\n"), file = session.file, append = TRUE)
+    
+    write(x = "### SESSION INFO\n", file = session.file, append = TRUE)
+    capture.output(versions$session, file = session.file, append = TRUE)
+    write(x = "\n\n\n", file = session.file, append = TRUE)
+    
+    write(x = paste0(rep("#", 150), collapse = ""), file = session.file, append = TRUE)
+    write(x = "\n", file = session.file, append = TRUE)
+    write(x = "### VERSIONS\n", file = session.file, append = TRUE)
+    write(x = "\n", file = session.file, append = TRUE)
+    capture.output(print(versions$versions), file = session.file, append = TRUE)
+  }
+} # end function
+
+session.info(print.versions = TRUE)
+```

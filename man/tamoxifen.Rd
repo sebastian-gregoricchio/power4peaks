@@ -5,15 +5,15 @@
 \alias{tamoxifen}
 \title{\code{tamoxifen} differential binding results}
 \format{
-A DBA object (7 responsive patients and 4 resistant)
-}
-\source{
-Ross-Innes et al. (Nature, 2012) \url{https://doi.org/10.1038/nature10730}
+A DBA object (7 responsive patients and 4 resistant, 2795 sites)
 }
 \usage{
 tamoxifen
 }
 \description{
 DiffBind differential analyses of ERa ChIP-seq data performed in human breast cancer cell lines responsive or not to tamoxifen treatment (estrogen receptor inhibitor), from Ross-Innes et al. (Nature, 2012).
+}
+\references{
+Ross-Innes et al. (Nature, 2012) \doi{https://doi.org/10.1038/nature10730}
 }
 \keyword{datasets}

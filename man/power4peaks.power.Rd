@@ -7,3 +7,17 @@
 \description{
 power4peaks.power class
 }
+\section{Slots}{
+
+\describe{
+\item{\code{pilot.data}}{output of \href{https://rdrr.io/bioc/SSPA/man/pilotData.html}{\code{SSPA:::pilotData}}, collects the info relative to statistics, p-value and sample size}
+
+\item{\code{sample.size}}{output of \href{https://rdrr.io/bioc/SSPA/man/sampleSize.html}{\code{SSPA:::sampleSize}}, contains the estimation of the proportion of non-differentially expressed genes and the density of the effect sizes}
+
+\item{\code{power}}{output of \href{https://rdrr.io/bioc/SSPA/man/predictpower.html}{\code{SSPA:::predictpower}}}
+
+\item{\code{effect.size.plot}}{ggplot object depicting the effect as function of the group size}
+
+\item{\code{power.plot}}{ggplot object depicting the power as function of the group size}
+}}
+

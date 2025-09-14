@@ -5,15 +5,18 @@
 \alias{endometrium}
 \title{\code{endometrium} differential binding results}
 \format{
-A DBA object (4 normal samples and 4 tumor samples)
+A DBA object (4 normal samples and 4 tumor samples, 30044 sites)
 }
 \source{
-Gregoricchio et al. (Genome Biology, 2025) \url{https://doi.org/10.1186/s13059-025-03596-5}
+\href{https://ega-archive.org/studies/EGAS00001007240}{EGAS00001007240} and \href{https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE253900}{GSE253900}.
 }
 \usage{
 endometrium
 }
 \description{
-DiffBind differential analyses of ERa ChIP-seq data performed in normal and tumor endometrium from human patients, Gregoricchio et al. (Genome Biology, 2025).
+\code{DiffBind} differential analyses of ERa ChIP-seq data performed in normal and tumor endometrium from human patients, Gregoricchio et al. (Genome Biology, 2025).
+}
+\references{
+Gregoricchio et al. (Genome Biology, 2025) \doi{https://doi.org/10.1186/s13059-025-03596-5}
 }
 \keyword{datasets}
