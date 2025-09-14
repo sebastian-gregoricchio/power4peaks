@@ -135,7 +135,7 @@ compute.power =
       xlim(c(0,NA)) +
       ggtitle(label = title_lable,
               subtitle = paste0("*",power4peaks.stats@contrast[1],":* **", power4peaks.stats@contrast[2], "** *vs* **",power4peaks.stats@contrast[3],"**")) +
-      annotate(geom = "text", x = +Inf, y = +Inf, label = bquote('\u03C0'^0 ~ "=" ~ .(round(ss@pi0, 2))), hjust = 1.5, vjust = 1.5) +
+      annotate(geom = "text", x = +Inf, y = +Inf, label = deparse(bquote('\u03C0'^0 ~ "=" ~ .(round(ss@pi0, 2)))), hjust = 1.5, vjust = 1.5, parse = TRUE) +
       ggpubr::theme_pubr() +
       theme(axis.text = element_text(color = "black"),
             axis.ticks = element_line(color = "black"),
