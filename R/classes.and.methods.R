@@ -1,5 +1,5 @@
 #' @title power4peaks.stats class
-#' @name power4peaks.stats
+#'
 #' @slot dba.object original DBA object derived from \code{DiffBind}
 #' @slot contrast contrast that has been used
 #' @slot design design matrix obtained from the analyses
@@ -32,7 +32,6 @@ setClass(Class = "power4peaks.stats",
 
 
 #' @title power4peaks.power class
-#' @name power4peaks.power
 #'
 #' @slot pilot.data output of \href{https://rdrr.io/bioc/SSPA/man/pilotData.html}{\code{SSPA:::pilotData}}, collects the info relative to statistics, p-value and sample size
 #' @slot sample.size output of \href{https://rdrr.io/bioc/SSPA/man/sampleSize.html}{\code{SSPA:::sampleSize}}, contains the estimation of the proportion of non-differentially expressed genes and the density of the effect sizes
@@ -54,6 +53,7 @@ setClass(Class = "power4peaks.power",
 ######################################################################################
 
 #' @title power4peaks.stats show-method
+#' @param object Object of class \code{power4peaks.stats}.
 #' @export
 setMethod(f = "show",
           signature = "power4peaks.stats",
@@ -69,6 +69,7 @@ setMethod(f = "show",
 
 
 #' @title power4peaks.power show-method
+#' @param object Object of class \code{power4peaks.power}.
 #' @importFrom patchwork wrap_plots
 #' @export
 setMethod(f = "show",

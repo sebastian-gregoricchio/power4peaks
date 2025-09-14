@@ -6,6 +6,9 @@
 \usage{
 \S4method{show}{power4peaks.stats}(object)
 }
+\arguments{
+\item{object}{Object of class \code{power4peaks.stats}.}
+}
 \description{
 power4peaks.stats show-method
 }

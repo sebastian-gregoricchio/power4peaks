@@ -36,9 +36,18 @@ jobs:
           extra-packages: any::pkgdown, local::.
           needs: website
 
-      - name: Build site
-        run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)
+      #- name: Build site
+      #  run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)
+      #  shell: Rscript {0}
+
+      - name: Build site (no vignettes)
         shell: Rscript {0}
+        run: |
+          pkgdown::init_site()
+          pkgdown::build_home()
+          pkgdown::build_reference()
+          pkgdown::build_news()
+          pkgdown::build_redirects()
 
       - name: Deploy to GitHub pages 🚀
         if: github.event_name != 'pull_request'
