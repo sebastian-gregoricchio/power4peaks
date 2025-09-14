@@ -42,6 +42,18 @@
 <li>
   <a href="reference/index.html">Reference</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Articles
+
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+<li>
+      <a href="articles/power4peaks_tutorial.html">&lt;font color="#ff8000"&gt;**`power4peaks` tutorial**&lt;/font&gt;</a>
+    </li>
+  </ul>
+</li>
 <li>
   <a href="news/index.html">Changelog</a>
 </li>
@@ -99,7 +111,7 @@
 </h2>
 <p>Some functions require <a href="https://www.bioconductor.org/packages/3.12/bioc/html/SSPA.html" class="external-link">SSPA</a>, package not available anymore on Bioconductor. These can be installed from the bioconductor archive source:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Install SSPA package from gitHub path</span></span>
+<code class="sourceCode R"><span><span class="co"># Install SSPA package from Bioconductor archive</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"https://www.bioconductor.org/packages/3.12/bioc/src/contrib/SSPA_2.30.0.tar.gz"</span>,</span>
 <span>                 type <span class="op">=</span> <span class="st">"source"</span><span class="op">)</span></span></code></pre></div>
 <p>Alternatively the source file is available in this repository in the directory <code>resources</code>.</p>
@@ -113,7 +125,7 @@
 <code class="sourceCode R"><span><span class="co"># Install remotes from CRAN</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Install the Rseb package</span></span>
+<span><span class="co"># Install the power4peaks package</span></span>
 <span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"sebastian-gregoricchio/power4peaks"</span>,</span>
 <span>                        build_manual <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>                        build_vignettes <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
@@ -123,7 +135,7 @@
 <div class="section level2">
 <h2 id="documentation">Documentation<a class="anchor" aria-label="anchor" href="#documentation"></a>
 </h2>
-<p>With the package a <a href="https://sebastian-gregoricchio.github.io/power4peaks/manual/index.html" class="external-link">web-manual</a> and a <a href="https://sebastian-gregoricchio.github.io/power4peaks/doc/power4peaks.overview.vignette.html" class="external-link">vignette</a> are available. The vignette can be inspected on R as well by typing <code>browseVignettes("power4peaks")</code>.</p>
+<p>With the package a <a href="https://sebastian-gregoricchio.github.io/power4peaks/manual/index.html" class="external-link">web-manual</a> and a <a href="https://sebastian-gregoricchio.github.io/power4peaks/doc/power4peaks_tutorial.html" class="external-link">vignette</a> are available. The vignette can be inspected on R as well by typing <code>browseVignettes("power4peaks")</code>.</p>
 <p><br></p>
 </div>
 <div class="section level2">
@@ -168,7 +180,7 @@
 <h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li><a href="LICENSE.html">Full license</a></li>
-<li><small>GNU GENERAL PUBLIC <a href="LICENSE-text.html">LICENSE</a> version 3</small></li>
+<li><small><a href="https://www.r-project.org/Licenses/GPL-3" class="external-link">GPL-3</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
 </ul>
 </div>
 
