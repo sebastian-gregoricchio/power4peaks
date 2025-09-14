@@ -49,7 +49,7 @@ Some functions require [SSPA](https://www.bioconductor.org/packages/3.12/bioc/ht
 These can be installed from the bioconductor archive source:
 
 ```r
-# Install SSPA package from gitHub path
+# Install SSPA package from Bioconductor archive
 install.packages("https://www.bioconductor.org/packages/3.12/bioc/src/contrib/SSPA_2.30.0.tar.gz",
                  type = "source")
 ```
@@ -63,7 +63,7 @@ Alternatively the source file is available in this repository in the directory `
 # Install remotes from CRAN
 install.packages("remotes")
 
-# Install the Rseb package
+# Install the power4peaks package
 remotes::install_github("sebastian-gregoricchio/power4peaks",
                         build_manual = TRUE,
                         build_vignettes = TRUE)
