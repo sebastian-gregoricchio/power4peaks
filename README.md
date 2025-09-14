@@ -73,7 +73,7 @@ remotes::install_github("sebastian-gregoricchio/power4peaks",
 <br />
 
 ## Documentation
-With the package a [web-manual](https://sebastian-gregoricchio.github.io/power4peaks/manual/index.html) and a [vignette](https://sebastian-gregoricchio.github.io/power4peaks/doc/power4peaks.overview.vignette.html) are available.
+With the package a [web-manual](https://sebastian-gregoricchio.github.io/power4peaks/manual/index.html) and a [vignette](https://sebastian-gregoricchio.github.io/power4peaks/doc/power4peaks_tutorial.html) are available.
 The vignette can be inspected on R as well by typing `browseVignettes("power4peaks")`.
 
 <br />
