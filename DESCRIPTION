@@ -7,7 +7,8 @@ Maintainer: Sebastian Gregoricchio <s.gregoricchio@nki.nl>
 Description: An R-package for power and sample size calculations for genpeaks data, such as ATAC-seq, ChIP-seq, CUT-and-Tag, etc.
 License: GPL-3 + file LICENSE
 Depends:
-	R (>= 4.0.3)
+	R (>= 4.0.3),
+	qvalue
 Imports:
 	BiocGenerics,
 	curl,
